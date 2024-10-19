@@ -1,0 +1,59 @@
+-- Creación de la base de datos
+CREATE DATABASE ventas_coca_cola;
+USE ventas_coca_cola;
+
+-- Tabla TiposClientes
+CREATE TABLE TiposClientes (
+    id_tipo_cliente INT AUTO_INCREMENT,
+    tipo_cliente VARCHAR(50),
+    PRIMARY KEY (id_tipo_cliente)
+);
+
+-- Tabla Clientes
+CREATE TABLE Clientes (
+    id_cliente INT AUTO_INCREMENT,
+    nombre_cliente VARCHAR(100),
+    id_tipo_cliente INT,  -- Relación con la tabla TiposClientes
+    PRIMARY KEY (id_cliente),
+    FOREIGN KEY (id_tipo_cliente) REFERENCES TiposClientes(id_tipo_cliente)
+);
+
+-- Tabla Regiones
+CREATE TABLE Regiones (
+    id_region INT AUTO_INCREMENT,
+    nombre_region VARCHAR(50),
+    PRIMARY KEY (id_region)
+);
+
+-- Tabla Proyecciones
+CREATE TABLE Proyecciones (
+    id_proyeccion INT AUTO_INCREMENT,
+    id_cliente INT,
+    id_region INT,
+    fecha_proyeccion DATE,
+    forecast DECIMAL(10,2),
+    PRIMARY KEY (id_proyeccion),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    FOREIGN KEY (id_region) REFERENCES Regiones(id_region)
+);
+
+-- Tabla Ventas
+CREATE TABLE Ventas (
+    id_venta INT AUTO_INCREMENT,
+    fecha_venta DATE,
+    cantidad_vendida DECIMAL(10,2),
+    id_cliente INT,  -- Relación con la tabla Clientes
+    id_proyeccion INT, -- Relación con la tabla Proyecciones
+    PRIMARY KEY (id_venta),
+    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
+    FOREIGN KEY (id_proyeccion) REFERENCES Proyecciones(id_proyeccion)
+);
+
+-- Tabla Proyecciones_Ventas
+CREATE TABLE Proyecciones_Ventas (
+    id_proyeccion INT,
+    id_venta INT,
+    FOREIGN KEY (id_proyeccion) REFERENCES Proyecciones(id_proyeccion),
+    FOREIGN KEY (id_venta) REFERENCES Ventas(id_venta)
+);
+
