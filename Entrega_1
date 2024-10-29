@@ -42,11 +42,7 @@ CREATE TABLE Ventas (
     id_venta INT AUTO_INCREMENT,
     fecha_venta DATE,
     cantidad_vendida DECIMAL(10,2),
-    id_cliente INT,  -- Relación con la tabla Clientes
-    id_proyeccion INT, -- Relación con la tabla Proyecciones
-    PRIMARY KEY (id_venta),
-    FOREIGN KEY (id_cliente) REFERENCES Clientes(id_cliente),
-    FOREIGN KEY (id_proyeccion) REFERENCES Proyecciones(id_proyeccion)
+    PRIMARY KEY (id_venta)
 );
 
 -- Tabla Proyecciones_Ventas
@@ -56,4 +52,3 @@ CREATE TABLE Proyecciones_Ventas (
     FOREIGN KEY (id_proyeccion) REFERENCES Proyecciones(id_proyeccion),
     FOREIGN KEY (id_venta) REFERENCES Ventas(id_venta)
 );
-
